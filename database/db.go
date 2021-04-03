@@ -41,6 +41,11 @@ type DB struct {
     db *pg.DB
 }
 
+// UpdateLastSeen updates object state in the database
+// It wraps the whole update process in the transaction to handle concurrent updates
+// First, it selects a row and puts an explicit lock ("select for update")
+// Then it checks if an existing object is newer and rollbacks if it is
+// Otherwise, it proceeds with upserting its state and committing the transaction (if there is no such object - it will be created)
 func (d *DB) UpdateLastSeen(id int, online bool, updateTime time.Time) error {
     transaction, err := d.db.Begin()
     if err != nil {

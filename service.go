@@ -12,6 +12,10 @@ import (
     "time"
 )
 
+const (
+    cleanupInterval = 30 * time.Second
+)
+
 var (
     couldNotFetchObject = errors.New("could not fetch object")
 )
@@ -25,7 +29,7 @@ func main() {
 
     err := db.CreateSchema()
     if err != nil {
-       log.Fatalf("Could not apply database migrations: %s", err)
+       log.Fatalf("Could not create database schema: %s", err)
     }
 
     startCleanupJob(db)
@@ -120,8 +124,8 @@ func startCleanupJob(db *database.DB) {
     go func() {
         last := time.Now()
         for {
-            time.Sleep(30 * time.Second)
-            removed, err := db.RemoveOlderThan(30 * time.Second)
+            time.Sleep(cleanupInterval)
+            removed, err := db.RemoveOlderThan(cleanupInterval)
             if err != nil {
                 log.Printf("Could not remove stale objects: %s\n", err)
             } else {
