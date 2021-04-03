@@ -14,7 +14,7 @@ import (
 
 const (
 	numberOfIDs = 200
-	maxID = 100
+	maxID       = 100
 )
 
 func main() {

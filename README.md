@@ -6,8 +6,8 @@ On each callback request it starts the asynchronous update of those objects and 
 For each object the service requests its data by ID from the `tester_service` and updates object's state in the database.
 
 ## How to run
-
-`go run service.go`
+1. Run a PostgreSQL instance, and configure the access to it in `database/connection.go`
+2. `go run service.go`
 
 ## Object updates
 Theoretically, if this were a production system, there could be a race condition.
