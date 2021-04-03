@@ -5,6 +5,12 @@ On each callback request it starts the asynchronous update of those objects and 
 
 For each object the service requests its data by ID from the `tester_service` and updates object's state in the database.
 
+## Note
+Please use `tester_service.go` provided in this repository.
+
+There was a minor mistake in the `tester_service.go` I was given.
+So I updated it to handle requests to `/objects/:id` correctly.
+
 ## How to run
 1. Run a PostgreSQL instance, and configure the access to it in `database/connection.go`
 2. `go run service.go`
